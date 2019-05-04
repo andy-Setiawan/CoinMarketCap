@@ -1,7 +1,14 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Image, TouchableOpacity, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  TouchableOpacity,
+  ScrollView
+} from "react-native";
 import { Icon } from "native-base";
-import { styles, signIn } from "../../assets/css/Style";
+import { styles, signIn, global } from "../../assets/css/Style";
 import { connect } from "react-redux";
 import { User_SignIn } from "../redux/actions/AuthAction";
 
@@ -14,11 +21,12 @@ class SignIn extends Component {
       password: ""
     };
 
-    this.handleSignIn = this.handleSignIn.bind(this)
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   handleSignIn = () => {
-    this.props.userSignIn(this.state.username, this.state.password);
+    this.props.userSignIn(this.state.username, this.state.password),
+      this.props.navigation.navigate("signIn");
   };
 
   render() {
@@ -38,7 +46,7 @@ class SignIn extends Component {
             <TextInput
               style={signIn.input}
               placeholder="Username"
-              placeholderTextColor="#868b93"
+              placeholderTextColor={global.textInputColor}
               returnKeyType="next"
               onSubmitEditing={() => this.password.focus()}
               autoCapitalize="none"
@@ -51,10 +59,10 @@ class SignIn extends Component {
             <TextInput
               style={signIn.input}
               placeholder="Password"
-              placeholderTextColor="#868b93"
+              placeholderTextColor={global.textInputColor}
               returnKeyType="done"
               ref={input => (this.password = input)}
-              onSubmitEditing={()=>this.handleSignIn()}
+              onSubmitEditing={() => this.handleSignIn()}
               autoCapitalize="none"
               autoCorrect={false}
               secureTextEntry
@@ -62,7 +70,7 @@ class SignIn extends Component {
             />
           </View>
           <View style={signIn.signInContainer}>
-            <TouchableOpacity onPress={()=>this.handleSignIn()}>
+            <TouchableOpacity onPress={() => this.handleSignIn()}>
               <View style={signIn.signIn}>
                 <Text style={signIn.signInText}>Sign In</Text>
                 <Icon
@@ -79,13 +87,18 @@ class SignIn extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  data: state.public.test
+});
+
 const mapDispatchToProps = dispatch => {
   return {
-    userSignIn: (username, password) => dispatch(User_SignIn(username, password))
+    userSignIn: (username, password) =>
+      dispatch(User_SignIn(username, password))
   };
 };
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(SignIn);

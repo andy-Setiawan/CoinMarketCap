@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
 import reducers from "./src/components/redux/reducers";
 import thunk from "redux-thunk"
-import SignIn from "./src/components/auth/SignIn";
+import { Navigation } from "./router";
 
 const instructions = Platform.select({
   ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
@@ -19,7 +19,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={store}>
-        <SignIn />
+        <Navigation />
       </Provider>
     );
   }
