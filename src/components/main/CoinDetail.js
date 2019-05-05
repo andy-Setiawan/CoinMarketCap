@@ -33,6 +33,7 @@ class CoinDetail extends Component {
             name="md-arrow-back"
             onPress={() => navigation.pop()}
           />
+          <View style={styles.headerBox}>
           <Image
             style={styles.headerLogo}
             source={{
@@ -40,6 +41,7 @@ class CoinDetail extends Component {
             }}
           />
           <Text style={styles.headerText}>{name}</Text>
+          </View>
         </View>
       )
     };

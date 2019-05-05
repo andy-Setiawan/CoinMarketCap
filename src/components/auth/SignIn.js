@@ -11,8 +11,13 @@ import { Icon } from "native-base";
 import { styles, signIn, global } from "../../assets/css/Style";
 import { connect } from "react-redux";
 import { User_SignIn } from "../redux/actions/AuthAction";
+import SplashScreen from 'react-native-splash-screen'
 
 class SignIn extends Component {
+  componentDidMount(){
+    SplashScreen.hide()
+  }
+
   constructor(props) {
     super(props);
 

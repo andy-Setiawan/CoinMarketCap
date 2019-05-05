@@ -24,8 +24,14 @@ export const styles = StyleSheet.create({
     flexDirection: "row"
   },
 
+  headerBox: {
+    flexDirection: "row",
+    width: width * 0.8,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
   headerLogo: {
-    marginLeft: width * 0.3,
     width: width * 0.075,
     height: width * 0.075
   },
@@ -40,7 +46,8 @@ export const styles = StyleSheet.create({
 
   headerIcon: {
     fontSize: 30,
-    color: global.textColor
+    color: global.textColor,
+    width: width * 0.1
   }
 });
 
@@ -283,7 +290,7 @@ export const coin = StyleSheet.create({
 
   pastText: {
     fontFamily: global.font,
-    fontWeight:"600",
+    fontWeight: "600",
     fontSize: 15,
     color: global.textInputColor
   },
@@ -297,7 +304,7 @@ export const coin = StyleSheet.create({
     paddingVertical: 15,
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems:"center",
+    alignItems: "center",
     borderBottomWidth: 1,
     borderBottomColor: global.textInputColor
   },
@@ -321,36 +328,82 @@ export const coin = StyleSheet.create({
   detailIcon: {
     fontSize: 30,
     fontWeight: "bold",
-    width:width*0.1,
+    width: width * 0.1,
     color: global.headerColor
   },
 
-  aboutBox:{
+  aboutBox: {
     paddingVertical: 15,
     borderBottomWidth: 1,
     borderBottomColor: global.textInputColor
   },
 
-  detailTitle:{
-    color:global.textColor,
-    fontFamily:global.font,
-    fontWeight:"bold",
-    fontSize:18,
-    marginBottom:10,
-  },
-
-  detailAbout:{
+  detailTitle: {
     color: global.textColor,
     fontFamily: global.font,
-    fontSize: 15,
+    fontWeight: "bold",
+    fontSize: 18,
+    marginBottom: 10
   },
 
-  viewText:{
-    marginTop:10,
+  detailAbout: {
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 15
+  },
+
+  viewText: {
+    marginTop: 10,
     textAlign: "right",
     color: global.textColor,
     fontFamily: global.font,
     fontSize: 15,
-    opacity:4
+    opacity: 4
+  }
+});
+
+export const setting = StyleSheet.create({
+  userTitle: {
+    color: global.textInputColor,
+    fontFamily: global.font,
+    fontSize: 15,
+    fontWeight: "500",
+    marginTop: 10,
+    paddingHorizontal: 15,
+    paddingVertical: 10
+  },
+
+  settingBox: {
+    flexDirection: "row",
+    backgroundColor: global.inputColor,
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 15,
+    paddingVertical: 10
+  },
+
+  settingText: {
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 15,
+    fontWeight: "500"
+  },
+
+  valueBox: {
+    flexDirection: "row",
+    alignItems: "center"
+  },
+
+  valueText: {
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 12,
+    fontWeight: "bold"
+  },
+
+  icon: {
+    fontSize: 20,
+    color: global.textColor,
+    marginLeft: 10
   }
 });

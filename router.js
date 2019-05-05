@@ -6,6 +6,7 @@ import { Icon } from "native-base";
 import Home from "./src/components/main/Home";
 import SignIn from "./src/components/auth/SignIn";
 import CoinDetail from "./src/components/main/CoinDetail";
+import Setting from "./src/components/main/Setting";
 
 const signOut = createStackNavigator(
   {
@@ -36,9 +37,9 @@ const signIn = createMaterialBottomTabNavigator(
       }
     },
     Setting: {
-      screen: Home,
+      screen: Setting,
       navigationOptions: {
-        tabBarLabel: "Setting",
+        tabBarLabel: "Settings",
         tabBarIcon: () => (
           <Icon type="Ionicons" name="md-settings" style={bottomTab.icon} />
         )
