@@ -5,6 +5,7 @@ import { global, bottomTab } from "./src/assets/css/Style";
 import { Icon } from "native-base";
 import Home from "./src/components/main/Home";
 import SignIn from "./src/components/auth/SignIn";
+import CoinDetail from "./src/components/main/CoinDetail";
 
 const signOut = createStackNavigator(
   {
@@ -13,6 +14,14 @@ const signOut = createStackNavigator(
     }
   },
   { headerMode: "none" }
+);
+
+const HomeStack = createStackNavigator(
+  {
+    CoinDetail: {
+      screen: CoinDetail
+    }
+  }
 );
 
 const signIn = createMaterialBottomTabNavigator(
@@ -26,7 +35,7 @@ const signIn = createMaterialBottomTabNavigator(
         )
       }
     },
-    SignOut: {
+    Setting: {
       screen: Home,
       navigationOptions: {
         tabBarLabel: "Setting",
@@ -48,7 +57,8 @@ const signIn = createMaterialBottomTabNavigator(
 const AppStack = createStackNavigator(
   {
     signOut: { screen: signOut },
-    signIn: { screen: signIn }
+    signIn: { screen: signIn },
+    HomeStack: { screen: HomeStack }
   },
   { headerMode: "none", initialRouteName: "signOut" }
 );

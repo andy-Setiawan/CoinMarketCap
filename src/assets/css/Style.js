@@ -8,14 +8,39 @@ export const global = {
   headerColor: "#3339bf",
   textColor: "#fafafa",
   font: "proxima_nova_regular",
-  badColor:"#a1354c",
-  goodColor:"#6bb210"
+  badColor: "#a1354c",
+  goodColor: "#6bb210"
 };
 
 export const styles = StyleSheet.create({
   container: {
     backgroundColor: global.backgroundColor,
     flex: 1
+  },
+
+  header: {
+    backgroundColor: global.headerColor,
+    padding: 10,
+    flexDirection: "row"
+  },
+
+  headerLogo: {
+    marginLeft: width * 0.3,
+    width: width * 0.075,
+    height: width * 0.075
+  },
+
+  headerText: {
+    marginLeft: 10,
+    fontSize: 18,
+    color: global.textColor,
+    fontWeight: "bold",
+    fontFamily: global.font
+  },
+
+  headerIcon: {
+    fontSize: 30,
+    color: global.textColor
   }
 });
 
@@ -143,6 +168,7 @@ export const home = StyleSheet.create({
   },
 
   input: {
+    width,
     marginLeft: 2,
     color: global.textInputColor,
     fontSize: 15,
@@ -154,20 +180,20 @@ export const home = StyleSheet.create({
   titleBox: {
     marginTop: 10,
     flexDirection: "row",
-    marginBottom: 5,
+    marginBottom: 5
   },
 
   titleText: {
-    width:width*0.33,
-    textAlign:"center",
+    width: width * 0.33,
+    textAlign: "center",
     fontFamily: global.font,
     fontSize: 12,
-    fontWeight:"bold",
+    fontWeight: "bold",
     color: global.textInputColor
   },
 
-  coinContainer:{
-    height:height*0.8
+  coinContainer: {
+    height: height * 0.8
   },
 
   coinBox: {
@@ -182,14 +208,14 @@ export const home = StyleSheet.create({
 
   number: {
     width: width * 0.075,
-    alignItems:"center",
+    alignItems: "center"
   },
 
   numberText: {
     color: global.textColor,
     fontFamily: global.font,
     fontSize: 15,
-    marginLeft:5,
+    marginLeft: 5
   },
 
   coinNameBox: {
@@ -214,20 +240,117 @@ export const home = StyleSheet.create({
     marginLeft: 10
   },
 
-  priceText:{
+  priceText: {
     color: global.textColor,
     fontFamily: global.font,
     marginLeft: 20,
-    textAlign:"right",
+    textAlign: "right",
     width: width * 0.2,
-    fontSize:15
+    fontSize: 15
   },
 
-  percentText:{
+  percentText: {
     fontFamily: global.font,
     marginLeft: 20,
-    textAlign:"right",
+    textAlign: "right",
     width: width * 0.2,
-    fontSize:15,
-  }, 
+    fontSize: 15
+  }
+});
+
+export const coin = StyleSheet.create({
+  priceBox: {
+    margin: 20
+  },
+
+  priceText: {
+    fontFamily: global.font,
+    fontWeight: "bold",
+    fontSize: 18,
+    color: global.textColor
+  },
+
+  percentBox: {
+    marginTop: 10,
+    flexDirection: "row"
+  },
+
+  percentText: {
+    fontFamily: global.font,
+    fontSize: 15,
+    fontWeight: "bold"
+  },
+
+  pastText: {
+    fontFamily: global.font,
+    fontWeight:"600",
+    fontSize: 15,
+    color: global.textInputColor
+  },
+
+  detailContainer: {
+    backgroundColor: global.inputColor,
+    paddingHorizontal: 20
+  },
+
+  detailBox: {
+    paddingVertical: 15,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems:"center",
+    borderBottomWidth: 1,
+    borderBottomColor: global.textInputColor
+  },
+
+  detailText: {
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 15,
+    fontWeight: "600"
+  },
+
+  valueText: {
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 15,
+    fontWeight: "bold"
+  },
+
+  iconBox: { flexDirection: "row", alignItems: "center" },
+
+  detailIcon: {
+    fontSize: 30,
+    fontWeight: "bold",
+    width:width*0.1,
+    color: global.headerColor
+  },
+
+  aboutBox:{
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: global.textInputColor
+  },
+
+  detailTitle:{
+    color:global.textColor,
+    fontFamily:global.font,
+    fontWeight:"bold",
+    fontSize:18,
+    marginBottom:10,
+  },
+
+  detailAbout:{
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 15,
+  },
+
+  viewText:{
+    marginTop:10,
+    textAlign: "right",
+    color: global.textColor,
+    fontFamily: global.font,
+    fontSize: 15,
+    opacity:4
+  }
 });

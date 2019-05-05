@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, TextInput, Image, ScrollView } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  ScrollView,
+  TouchableOpacity
+} from "react-native";
 import { connect } from "react-redux";
 import { styles, home, global } from "../../assets/css/Style";
 import { Icon } from "native-base";
@@ -29,7 +36,7 @@ class Home extends Component {
             placeholderTextColor={global.textInputColor}
             returnKeyType="done"
             autoCapitalize="none"
-            onChangeText={(search) => this.setState({search})}
+            onChangeText={search => this.setState({ search })}
           />
         </View>
         <View style={home.titleBox}>
@@ -39,65 +46,70 @@ class Home extends Component {
         </View>
         <ScrollView style={home.coinContainer}>
           {this.props.coinData
-            .filter(
-              data =>
-                data.name
-                  .toLowerCase()
-                  .includes(this.state.search.toLowerCase())
+            .filter(data =>
+              data.name.toLowerCase().includes(this.state.search.toLowerCase())
             )
             .map((data, i) => {
               return (
-                <View style={home.coinBox} key={i}>
-                  <View style={home.number}>
-                    <Text style={home.numberText}>{i + 1}</Text>
-                  </View>
-                  <View style={home.coinNameBox}>
-                    <Image
-                      style={home.coinImage}
-                      source={{
-                        uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${
-                          data.id
-                        }.png`
-                      }}
-                    />
-                    <View style={home.coinName}>
-                      <Text
-                        style={{
-                          ...home.coinText,
-                          fontSize: 15,
-                          fontWeight: "bold"
-                        }}
-                      >
-                        {data.symbol}
-                      </Text>
-                      <Text style={{ ...home.coinText, fontSize: 12 }}>
-                        {data.name}
-                      </Text>
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => this.props.navigation.navigate("CoinDetail",{
+                    id: data.id,
+                    name: data.name,
+                  })}
+                >
+                  <View style={home.coinBox}>
+                    <View style={home.number}>
+                      <Text style={home.numberText}>{i + 1}</Text>
                     </View>
+                    <View style={home.coinNameBox}>
+                      <Image
+                        style={home.coinImage}
+                        source={{
+                          uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${
+                            data.id
+                          }.png`
+                        }}
+                      />
+                      <View style={home.coinName}>
+                        <Text
+                          style={{
+                            ...home.coinText,
+                            fontSize: 15,
+                            fontWeight: "bold"
+                          }}
+                        >
+                          {data.symbol}
+                        </Text>
+                        <Text style={{ ...home.coinText, fontSize: 12 }}>
+                          {data.name}
+                        </Text>
+                      </View>
+                    </View>
+                    <Text style={{ ...home.priceText }}>
+                      {"$ "}
+                      {data.quote.USD.price
+                        .toFixed(2)
+                        .toString()
+                        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    </Text>
+                    {data.quote.USD.percent_change_24h.toFixed(2) >= 0 ? (
+                      <Text
+                        style={{ ...home.percentText, color: global.goodColor }}
+                      >
+                        {data.quote.USD.percent_change_24h.toFixed(2)}
+                        {"%"}
+                      </Text>
+                    ) : (
+                      <Text
+                        style={{ ...home.percentText, color: global.badColor }}
+                      >
+                        {data.quote.USD.percent_change_24h.toFixed(2)}
+                        {"%"}
+                      </Text>
+                    )}
                   </View>
-                  <Text style={{ ...home.priceText }}>
-                    {"$ "}
-                    {data.quote.USD.price
-                      .toFixed(2)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                  </Text>
-                  {data.quote.USD.percent_change_24h.toFixed(2) >= 0 ? (
-                    <Text
-                      style={{ ...home.percentText, color: global.goodColor }}
-                    >
-                      {data.quote.USD.percent_change_24h.toFixed(2)}
-                      {"%"}
-                    </Text>
-                  ) : (
-                    <Text
-                      style={{ ...home.percentText, color: global.badColor }}
-                    >
-                      {data.quote.USD.percent_change_24h.toFixed(2)}
-                      {"%"}
-                    </Text>
-                  )}
-                </View>
+                </TouchableOpacity>
               );
             })}
         </ScrollView>
@@ -113,7 +125,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     // getCoin : () => dispatch(Get_Coin())
-  }
+  };
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(Home);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Home);
