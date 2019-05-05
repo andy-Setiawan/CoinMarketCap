@@ -10,7 +10,8 @@ import {
 import { connect } from "react-redux";
 import { styles, home, global } from "../../assets/css/Style";
 import { Icon } from "native-base";
-// import { Get_Coin } from "../redux/actions/PublicAction"
+import { UIActivityIndicator } from "react-native-indicators";
+import { Get_Coin, Set_Loading } from "../redux/actions/PublicAction";
 
 class Home extends Component {
   constructor(props) {
@@ -21,9 +22,24 @@ class Home extends Component {
     };
   }
 
-  // componentDidMount(){
-  //   this.props.getCoin()
-  // }
+  componentDidMount() {
+    // this.interval = setInterval(() => {
+    //   console.log("ok");
+    // }, 30000);
+    this.props.setLoading();
+    //   this.props.getCoin()
+  }
+
+  // this.props.loading === true ? (
+  //   <View style={styles.container}>
+  //     <UIActivityIndicator color={global.textColor} />
+  //   </View>
+  // ) : 
+  
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
 
   render() {
     return (
@@ -53,10 +69,12 @@ class Home extends Component {
               return (
                 <TouchableOpacity
                   key={i}
-                  onPress={() => this.props.navigation.navigate("CoinDetail",{
-                    id: data.id,
-                    name: data.name,
-                  })}
+                  onPress={() =>
+                    this.props.navigation.navigate("CoinDetail", {
+                      id: data.id,
+                      name: data.name
+                    })
+                  }
                 >
                   <View style={home.coinBox}>
                     <View style={home.number}>
@@ -119,12 +137,14 @@ class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-  coinData: state.public.coin
+  coinData: state.public.coin,
+  loading: state.public.isLoading
 });
 
 const mapDispatchToProps = dispatch => {
   return {
-    // getCoin : () => dispatch(Get_Coin())
+    // getCoin : () => dispatch(Get_Coin()),
+    setLoading: () => dispatch(Set_Loading())
   };
 };
 

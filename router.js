@@ -29,9 +29,9 @@ const signIn = createMaterialBottomTabNavigator(
     Home: {
       screen: Home,
       navigationOptions: {
-        tabBarLabel: "Coin",
+        tabBarLabel: "Coins",
         tabBarIcon: () => (
-          <Icon type="FontAwesome5" name="bitcoin" style={bottomTab.icon} />
+          <Icon type="Foundation" name="bitcoin-circle" style={bottomTab.icon} />
         )
       }
     },
