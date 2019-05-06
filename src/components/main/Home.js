@@ -24,6 +24,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
+    this.props.getCoin();
     this.interval = setInterval(() => {
       this.props.getCoin();
     }, 10000);
