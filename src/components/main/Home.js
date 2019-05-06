@@ -193,9 +193,7 @@ class Home extends Component {
                             color: global.goodColor
                           }}
                         >
-                          {numeral(data.quote.USD.percent_change_24h).format(
-                            "0.000%"
-                          )}
+                          {data.quote.USD.percent_change_24h.toFixed(2)}{"%"}
                         </Text>
                       ) : (
                         <Text
@@ -204,9 +202,7 @@ class Home extends Component {
                             color: global.badColor
                           }}
                         >
-                          {numeral(data.quote.USD.percent_change_24h).format(
-                            "0.000%"
-                          )}
+                          {data.quote.USD.percent_change_24h.toFixed(2)}{"%"}
                         </Text>
                       )}
                     </View>

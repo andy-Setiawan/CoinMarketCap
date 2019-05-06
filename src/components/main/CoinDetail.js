@@ -92,9 +92,8 @@ class CoinDetail extends Component {
                         color: global.goodColor
                       }}
                     >
-                      {numeral(data.quote.USD.percent_change_24h).format(
-                        "+ 0.000%"
-                      )}
+                      {"+"}
+                      {data.quote.USD.percent_change_24h.toFixed(2)}
                     </Text>
                   ) : (
                     <Text
@@ -103,9 +102,7 @@ class CoinDetail extends Component {
                         color: global.badColor
                       }}
                     >
-                      {numeral(data.quote.USD.percent_change_24h).format(
-                        "+ 0.000%"
-                      )}
+                      {data.quote.USD.percent_change_24h.toFixed(2)}
                     </Text>
                   )}
                   <Text style={coin.pastText}> Past 24H</Text>
@@ -115,19 +112,25 @@ class CoinDetail extends Component {
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>Market Cap</Text>
                   <Text style={coin.valueText}>
-                    {numeral(data.quote.USD.market_cap).format("($ 0.00a)").toUpperCase()}
+                    {numeral(data.quote.USD.market_cap)
+                      .format("($ 0.00a)")
+                      .toUpperCase()}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>Circulation Supply</Text>
                   <Text style={coin.valueText}>
-                    {numeral(data.circulating_supply).format("($ 0.00a)").toUpperCase()}
+                    {numeral(data.circulating_supply)
+                      .format("($ 0.00a)")
+                      .toUpperCase()}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>24H Volume</Text>
                   <Text style={coin.valueText}>
-                    {numeral(data.quote.USD.volume_24h).format("($ 0.00a)").toUpperCase()}
+                    {numeral(data.quote.USD.volume_24h)
+                      .format("($ 0.00a)")
+                      .toUpperCase()}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
@@ -146,7 +149,9 @@ class CoinDetail extends Component {
                     renderViewLess={this.renderViewLess}
                   >
                     <Text style={coin.detailAbout}>
-                      {this.props.info.description}
+                      {this.props.info.description === null
+                        ? "n/a"
+                        : this.props.info.description}
                     </Text>
                   </ViewMoreText>
                 </View>
