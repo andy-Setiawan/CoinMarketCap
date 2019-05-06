@@ -12,6 +12,7 @@ import { styles, home, global } from "../../assets/css/Style";
 import { Icon } from "native-base";
 import { UIActivityIndicator } from "react-native-indicators";
 import { Get_Coin, Set_Loading } from "../redux/actions/PublicAction";
+import SplashScreen from "react-native-splash-screen";
 
 class Home extends Component {
   constructor(props) {
@@ -26,6 +27,7 @@ class Home extends Component {
     // this.interval = setInterval(() => {
     //   console.log("ok");
     // }, 30000);
+    SplashScreen.hide()
     this.props.setLoading();
     //   this.props.getCoin()
   }

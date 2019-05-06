@@ -1,16 +1,15 @@
 import { SIGNIN, SIGNOUT } from "../types/ActionType";
 
 const initialState = {
-  username: "",
-  password: ""
+  username: ""
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
     case SIGNIN:
-      return { ...state, username: action.username, password: action.password };
+      return { ...state, username: action.username };
     case SIGNOUT:
-      return { ...state };
+      return { ...state, username: "" };
     default:
       return { ...state };
   }

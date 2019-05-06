@@ -11,11 +11,19 @@ import { Icon } from "native-base";
 import { styles, signIn, global } from "../../assets/css/Style";
 import { connect } from "react-redux";
 import { User_SignIn } from "../redux/actions/AuthAction";
-import SplashScreen from 'react-native-splash-screen'
+import SplashScreen from "react-native-splash-screen";
+import AsyncStorage from "@react-native-community/async-storage";
 
 class SignIn extends Component {
-  componentDidMount(){
-    SplashScreen.hide()
+  componentDidMount() {
+    AsyncStorage.getItem("LoginStatus").then(value =>
+      value
+        ? (AsyncStorage.getItem("Username").then(name =>
+            this.props.userSignIn(name)
+          ),
+          this.props.navigation.navigate("signIn"))
+        : SplashScreen.hide()
+    );
   }
 
   constructor(props) {
@@ -92,18 +100,13 @@ class SignIn extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  data: state.public.test
-});
-
 const mapDispatchToProps = dispatch => {
   return {
-    userSignIn: (username, password) =>
-      dispatch(User_SignIn(username, password))
+    userSignIn: username => dispatch(User_SignIn(username))
   };
 };
 
 export default connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(SignIn);

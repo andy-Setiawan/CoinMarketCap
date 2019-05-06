@@ -8,8 +8,8 @@ export const global = {
   headerColor: "#3339bf",
   textColor: "#fafafa",
   font: "proxima_nova_regular",
-  badColor: "#a1354c",
-  goodColor: "#6bb210"
+  badColor: "#fe3d46",
+  goodColor: "#3dc851"
 };
 
 export const styles = StyleSheet.create({
@@ -151,7 +151,7 @@ export const signIn = StyleSheet.create({
 
 export const bottomTab = StyleSheet.create({
   icon: {
-    fontSize: 25,
+    fontSize: 20,
     color: global.textColor
   }
 });

@@ -1,5 +1,9 @@
 import React from "react";
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import {
+  createStackNavigator,
+  createAppContainer,
+  createSwitchNavigator
+} from "react-navigation";
 import { createMaterialBottomTabNavigator } from "react-navigation-material-bottom-tabs";
 import { global, bottomTab } from "./src/assets/css/Style";
 import { Icon } from "native-base";
@@ -17,22 +21,31 @@ const signOut = createStackNavigator(
   { headerMode: "none" }
 );
 
-const HomeStack = createStackNavigator(
-  {
-    CoinDetail: {
-      screen: CoinDetail
+const HomeStack = createStackNavigator({
+  Home: {
+    screen: Home,
+    navigationOptions: {
+      header: null
     }
+  },
+
+  CoinDetail: {
+    screen: CoinDetail
   }
-);
+});
 
 const signIn = createMaterialBottomTabNavigator(
   {
-    Home: {
-      screen: Home,
+    HomeStack: {
+      screen: HomeStack,
       navigationOptions: {
         tabBarLabel: "Coins",
         tabBarIcon: () => (
-          <Icon type="Foundation" name="bitcoin-circle" style={bottomTab.icon} />
+          <Icon
+            type="FontAwesome5"
+            name="coins"
+            style={bottomTab.icon}
+          />
         )
       }
     },
@@ -41,13 +54,13 @@ const signIn = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Settings",
         tabBarIcon: () => (
-          <Icon type="Ionicons" name="md-settings" style={bottomTab.icon} />
+          <Icon type="MaterialIcons" name="settings" style={bottomTab.icon} />
         )
       }
     }
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "HomeStack",
     shifting: true,
     activeColor: "#fafafa",
     inactiveColor: "#fafafa",
@@ -55,12 +68,15 @@ const signIn = createMaterialBottomTabNavigator(
   }
 );
 
-const AppStack = createStackNavigator(
+const AppStack = createSwitchNavigator(
   {
     signOut: { screen: signOut },
-    signIn: { screen: signIn },
-    HomeStack: { screen: HomeStack }
+    signIn: { screen: signIn }
   },
-  { headerMode: "none", initialRouteName: "signOut" }
+  {
+    headerMode: "none",
+    initialRouteName: "signOut",
+    backBehavior:"none"
+  }
 );
 export const Navigation = createAppContainer(AppStack);
