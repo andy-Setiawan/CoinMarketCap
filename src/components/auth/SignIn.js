@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { User_SignIn } from "../redux/actions/AuthAction";
 import SplashScreen from "react-native-splash-screen";
 import AsyncStorage from "@react-native-community/async-storage";
+import AwesomeAlert from "react-native-awesome-alerts";
 
 class SignIn extends Component {
   componentDidMount() {
@@ -31,15 +32,24 @@ class SignIn extends Component {
 
     this.state = {
       username: "",
-      password: ""
+      password: "",
+      showAlert:false
     };
 
     this.handleSignIn = this.handleSignIn.bind(this);
   }
 
+  hideAlert = () => {
+    this.setState({
+      showAlert: false
+    });
+  };
+
   handleSignIn = () => {
-    this.props.userSignIn(this.state.username, this.state.password),
-      this.props.navigation.navigate("signIn");
+    this.state.username.match(/.*\S.*/)
+      ? (this.props.userSignIn(this.state.username, this.state.password),
+        this.props.navigation.navigate("signIn"))
+      : this.setState({showAlert:true});
   };
 
   render() {
@@ -95,6 +105,19 @@ class SignIn extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        <AwesomeAlert
+          show={this.state.showAlert}
+          message="Username must not blank"
+          closeOnTouchOutside={true}
+          closeOnHardwareBackPress={false}
+          showConfirmButton={true}
+          confirmText="OK"
+          confirmButtonTextStyle={global.textColor}
+          confirmButtonStyle={{backgroundColor:global.headerColor, width:75, alignItems:"center"}}
+          onConfirmPressed={() => {
+            this.hideAlert();
+          }}
+        />
       </ScrollView>
     );
   }
