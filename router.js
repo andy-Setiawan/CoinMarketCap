@@ -41,11 +41,7 @@ const signIn = createMaterialBottomTabNavigator(
       navigationOptions: {
         tabBarLabel: "Coins",
         tabBarIcon: () => (
-          <Icon
-            type="FontAwesome5"
-            name="coins"
-            style={bottomTab.icon}
-          />
+          <Icon type="FontAwesome5" name="coins" style={bottomTab.icon} />
         )
       }
     },
@@ -76,7 +72,7 @@ const AppStack = createSwitchNavigator(
   {
     headerMode: "none",
     initialRouteName: "signOut",
-    backBehavior:"none"
+    backBehavior: "none"
   }
 );
 export const Navigation = createAppContainer(AppStack);

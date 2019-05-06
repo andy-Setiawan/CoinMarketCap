@@ -34,13 +34,13 @@ class CoinDetail extends Component {
             onPress={() => navigation.pop()}
           />
           <View style={styles.headerBox}>
-          <Image
-            style={styles.headerLogo}
-            source={{
-              uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${icon}.png`
-            }}
-          />
-          <Text style={styles.headerText}>{name}</Text>
+            <Image
+              style={styles.headerLogo}
+              source={{
+                uri: `https://s2.coinmarketcap.com/static/img/coins/64x64/${icon}.png`
+              }}
+            />
+            <Text style={styles.headerText}>{name}</Text>
           </View>
         </View>
       )
@@ -49,6 +49,25 @@ class CoinDetail extends Component {
 
   handleOpenUrl = link => {
     Linking.openURL(link);
+  };
+
+  abbrNum = (number, decPlaces) => {
+    decPlaces = Math.pow(10, decPlaces);
+    var abbrev = ["k", "M", "B", "T"];
+    for (var i = abbrev.length - 1; i >= 0; i--) {
+      var size = Math.pow(10, (i + 1) * 3);
+      if (size <= number) {
+        number = Math.round((number * decPlaces) / size) / decPlaces;
+        if (number == 1000 && i < abbrev.length - 1) {
+          number = 1;
+          i++;
+        }
+        number += abbrev[i];
+        break;
+      }
+    }
+
+    return number;
   };
 
   renderViewMore(onPress) {
@@ -118,30 +137,21 @@ class CoinDetail extends Component {
                   <Text style={coin.detailText}>Market Cap</Text>
                   <Text style={coin.valueText}>
                     {"$ "}
-                    {data.quote.USD.market_cap
-                      .toFixed(2)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {this.abbrNum(data.quote.USD.market_cap, 2)}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>Circulation Supply</Text>
                   <Text style={coin.valueText}>
                     {"$ "}
-                    {data.circulating_supply
-                      .toFixed(2)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {this.abbrNum(data.circulating_supply, 2)}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>24H Volume</Text>
                   <Text style={coin.valueText}>
                     {"$ "}
-                    {data.quote.USD.volume_24h
-                      .toFixed(2)
-                      .toString()
-                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                    {this.abbrNum(data.quote.USD.volume_24h, 2)}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
@@ -149,7 +159,7 @@ class CoinDetail extends Component {
                   <Text style={coin.valueText}>
                     {this.props.info.platform === null
                       ? "n/a"
-                      : this.props.info.platform}
+                      : this.props.info.platform.name}
                   </Text>
                 </View>
                 <View style={coin.aboutBox}>

@@ -184,17 +184,22 @@ export const home = StyleSheet.create({
     paddingLeft: 10
   },
 
-  titleBox: {
+  titleContainer: {
     marginTop: 10,
     flexDirection: "row",
     marginBottom: 5
   },
 
+  titleBox: {
+    flexDirection: "row",
+    width: width * 0.32,
+    justifyContent: "center"
+  },
+
   titleText: {
-    width: width * 0.33,
     textAlign: "center",
     fontFamily: global.font,
-    fontSize: 12,
+    fontSize: 10,
     fontWeight: "bold",
     color: global.textInputColor
   },
@@ -221,7 +226,7 @@ export const home = StyleSheet.create({
   numberText: {
     color: global.textColor,
     fontFamily: global.font,
-    fontSize: 15,
+    fontSize: 12,
     marginLeft: 5
   },
 
@@ -247,21 +252,24 @@ export const home = StyleSheet.create({
     marginLeft: 10
   },
 
+  priceBox: {
+    flexDirection: "column",
+    alignItems: "flex-end",
+    width: width*0.25
+  },
+
   priceText: {
     color: global.textColor,
     fontFamily: global.font,
-    marginLeft: 20,
-    textAlign: "right",
-    width: width * 0.2,
     fontSize: 15
   },
 
   percentText: {
     fontFamily: global.font,
-    marginLeft: 20,
+    fontWeight: "600",
+    marginTop: 5,
     textAlign: "right",
-    width: width * 0.2,
-    fontSize: 15
+    fontSize: 12
   }
 });
 
