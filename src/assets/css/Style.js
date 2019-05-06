@@ -196,12 +196,21 @@ export const home = StyleSheet.create({
     justifyContent: "center"
   },
 
-  titleText: {
+  offTitleText: {
     textAlign: "center",
     fontFamily: global.font,
     fontSize: 10,
     fontWeight: "bold",
     color: global.textInputColor
+  },
+
+
+  onTitleText: {
+    textAlign: "center",
+    fontFamily: global.font,
+    fontSize: 10,
+    fontWeight: "bold",
+    color: global.textColor
   },
 
   coinContainer: {

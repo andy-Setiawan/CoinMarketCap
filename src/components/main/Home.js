@@ -11,8 +11,16 @@ import { connect } from "react-redux";
 import { styles, home, global } from "../../assets/css/Style";
 import { Icon } from "native-base";
 import { UIActivityIndicator } from "react-native-indicators";
-import { Get_Coin, Set_Loading } from "../redux/actions/PublicAction";
+import {
+  Get_Coin,
+  Sort_Name,
+  Sort_Price,
+  Sort_Change,
+  Sort_Volume,
+  Set_Loading
+} from "../redux/actions/PublicAction";
 import SplashScreen from "react-native-splash-screen";
+import numeral from "numeral";
 
 class Home extends Component {
   constructor(props) {
@@ -26,32 +34,32 @@ class Home extends Component {
   componentDidMount() {
     this.props.getCoin();
     this.interval = setInterval(() => {
-      this.props.getCoin();
-    }, 10000);
+      switch (this.props.sort) {
+        case "coin":
+          this.props.getCoin();
+          break;
+        case "name":
+          this.props.sortName();
+          break;
+        case "price":
+          this.props.sortPrice();
+          break;
+        case "change":
+          this.props.sortChange();
+          break;
+        case "volume":
+          this.props.sortVolume();
+          break;
+        default:
+          break;
+      }
+    }, 20000);
     SplashScreen.hide();
   }
 
   componentWillUnmount() {
     clearInterval(this.interval);
   }
-
-  abbrNum = (number, decPlaces) => {
-    decPlaces = Math.pow(10, decPlaces);
-    var abbrev = ["k", "M", "B", "T"];
-    for (var i = abbrev.length - 1; i >= 0; i--) {
-      var size = Math.pow(10, (i + 1) * 3);
-      if (size <= number) {
-        number = Math.round((number * decPlaces) / size) / decPlaces;
-        if (number == 1000 && i < abbrev.length - 1) {
-          number = 1;
-          i++;
-        }
-        number += abbrev[i];
-        break;
-      }
-    }
-    return number;
-  };
 
   goToDetail = async (dataId, dataName) => {
     await this.props.setLoading();
@@ -81,17 +89,58 @@ class Home extends Component {
         </View>
         <View style={home.titleContainer}>
           <View style={home.titleBox}>
-            <Text style={home.titleText}>COIN</Text>
+            <Text
+              style={
+                this.props.sort == "name" ? home.onTitleText : home.offTitleText
+              }
+              onPress={() => this.props.sortName()}
+            >
+              COIN
+            </Text>
           </View>
           <View style={{ ...home.titleBox, justifyContent: "flex-end" }}>
-            <Text style={home.titleText}>PRICE</Text>
-            <Text style={home.titleText}> / </Text>
-            <Text style={home.titleText}>24H CHG</Text>
+            <Text
+              style={
+                this.props.sort == "price"
+                  ? home.onTitleText
+                  : home.offTitleText
+              }
+              onPress={() => this.props.sortPrice()}
+            >
+              PRICE
+            </Text>
+            <Text style={home.offTitleText}>{" / "}</Text>
+            <Text
+              style={
+                this.props.sort == "change"
+                  ? home.onTitleText
+                  : home.offTitleText
+              }
+              onPress={() => this.props.sortChange()}
+            >
+              24H CHG
+            </Text>
           </View>
           <View style={home.titleBox}>
-            <Text style={home.titleText}>M.CAP</Text>
-            <Text style={home.titleText}> / </Text>
-            <Text style={home.titleText}>VOL</Text>
+            <Text
+              style={
+                this.props.sort == "coin" ? home.onTitleText : home.offTitleText
+              }
+              onPress={() => this.props.getCoin()}
+            >
+              M.CAP
+            </Text>
+            <Text style={home.offTitleText}>{" / "}</Text>
+            <Text
+              style={
+                this.props.sort == "volume"
+                  ? home.onTitleText
+                  : home.offTitleText
+              }
+              onPress={() => this.props.sortVolume()}
+            >
+              VOL
+            </Text>
           </View>
         </View>
         <ScrollView style={home.coinContainer}>
@@ -101,7 +150,10 @@ class Home extends Component {
             )
             .map((data, i) => {
               return (
-                <TouchableOpacity key={i} onPress={() => this.goToDetail(data.id,data.name)}>
+                <TouchableOpacity
+                  key={i}
+                  onPress={() => this.goToDetail(data.id, data.name)}
+                >
                   <View style={home.coinBox}>
                     <View style={home.number}>
                       <Text style={home.numberText}>{i + 1}</Text>
@@ -132,21 +184,18 @@ class Home extends Component {
                     </View>
                     <View style={home.priceBox}>
                       <Text style={home.priceText}>
-                        {"$ "}
-                        {data.quote.USD.price
-                          .toFixed(2)
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                        {numeral(data.quote.USD.price).format("$0,0.00")}
                       </Text>
-                      {data.quote.USD.percent_change_24h.toFixed(2) >= 0 ? (
+                      {data.quote.USD.percent_change_24h >= 0 ? (
                         <Text
                           style={{
                             ...home.percentText,
                             color: global.goodColor
                           }}
                         >
-                          {data.quote.USD.percent_change_24h.toFixed(2)}
-                          {"%"}
+                          {numeral(data.quote.USD.percent_change_24h).format(
+                            "0.000%"
+                          )}
                         </Text>
                       ) : (
                         <Text
@@ -155,19 +204,22 @@ class Home extends Component {
                             color: global.badColor
                           }}
                         >
-                          {data.quote.USD.percent_change_24h.toFixed(2)}
-                          {"%"}
+                          {numeral(data.quote.USD.percent_change_24h).format(
+                            "0.000%"
+                          )}
                         </Text>
                       )}
                     </View>
                     <View style={home.priceBox}>
                       <Text style={home.priceText}>
-                        {"$ "}
-                        {this.abbrNum(data.quote.USD.market_cap, 2)}
+                        {numeral(data.quote.USD.market_cap)
+                          .format("($ 0.00a)")
+                          .toUpperCase()}
                       </Text>
                       <Text style={home.percentText}>
-                        {"$ "}
-                        {this.abbrNum(data.quote.USD.volume_24h, 2)}
+                        {numeral(data.quote.USD.volume_24h)
+                          .format("($ 0.00a)")
+                          .toUpperCase()}
                       </Text>
                     </View>
                   </View>
@@ -182,12 +234,17 @@ class Home extends Component {
 
 const mapStateToProps = state => ({
   coinData: state.public.coin,
-  loading: state.public.isLoading
+  loading: state.public.isLoading,
+  sort: state.public.sort
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     getCoin: () => dispatch(Get_Coin()),
+    sortName: () => dispatch(Sort_Name()),
+    sortPrice: () => dispatch(Sort_Price()),
+    sortChange: () => dispatch(Sort_Change()),
+    sortVolume: () => dispatch(Sort_Volume()),
     setLoading: () => dispatch(Set_Loading())
   };
 };

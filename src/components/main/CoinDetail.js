@@ -13,6 +13,7 @@ import { styles, global, coin } from "../../assets/css/Style";
 import { Icon } from "native-base";
 import { Get_Info, Set_Loading } from "../redux/actions/PublicAction";
 import ViewMoreText from "react-native-view-more-text";
+import numeral from "numeral";
 
 class CoinDetail extends Component {
   componentDidMount() {
@@ -51,25 +52,6 @@ class CoinDetail extends Component {
     Linking.openURL(link);
   };
 
-  abbrNum = (number, decPlaces) => {
-    decPlaces = Math.pow(10, decPlaces);
-    var abbrev = ["k", "M", "B", "T"];
-    for (var i = abbrev.length - 1; i >= 0; i--) {
-      var size = Math.pow(10, (i + 1) * 3);
-      if (size <= number) {
-        number = Math.round((number * decPlaces) / size) / decPlaces;
-        if (number == 1000 && i < abbrev.length - 1) {
-          number = 1;
-          i++;
-        }
-        number += abbrev[i];
-        break;
-      }
-    }
-
-    return number;
-  };
-
   renderViewMore(onPress) {
     return (
       <Text style={coin.viewText} onPress={onPress}>
@@ -100,23 +82,19 @@ class CoinDetail extends Component {
             <ScrollView style={{ ...styles.container }} key={i}>
               <View style={coin.priceBox}>
                 <Text style={coin.priceText}>
-                  {"$ "}
-                  {data.quote.USD.price
-                    .toFixed(2)
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  {numeral(data.quote.USD.price).format("$0,0.00")}
                 </Text>
                 <View style={coin.percentBox}>
-                  {data.quote.USD.percent_change_24h.toFixed(2) >= 0 ? (
+                  {data.quote.USD.percent_change_24h >= 0 ? (
                     <Text
                       style={{
                         ...coin.percentText,
                         color: global.goodColor
                       }}
                     >
-                      {"+"}
-                      {data.quote.USD.percent_change_24h.toFixed(2)}
-                      {"%"}
+                      {numeral(data.quote.USD.percent_change_24h).format(
+                        "+ 0.000%"
+                      )}
                     </Text>
                   ) : (
                     <Text
@@ -125,8 +103,9 @@ class CoinDetail extends Component {
                         color: global.badColor
                       }}
                     >
-                      {data.quote.USD.percent_change_24h.toFixed(2)}
-                      {"%"}
+                      {numeral(data.quote.USD.percent_change_24h).format(
+                        "+ 0.000%"
+                      )}
                     </Text>
                   )}
                   <Text style={coin.pastText}> Past 24H</Text>
@@ -136,22 +115,19 @@ class CoinDetail extends Component {
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>Market Cap</Text>
                   <Text style={coin.valueText}>
-                    {"$ "}
-                    {this.abbrNum(data.quote.USD.market_cap, 2)}
+                    {numeral(data.quote.USD.market_cap).format("($ 0.00a)").toUpperCase()}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>Circulation Supply</Text>
                   <Text style={coin.valueText}>
-                    {"$ "}
-                    {this.abbrNum(data.circulating_supply, 2)}
+                    {numeral(data.circulating_supply).format("($ 0.00a)").toUpperCase()}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
                   <Text style={coin.detailText}>24H Volume</Text>
                   <Text style={coin.valueText}>
-                    {"$ "}
-                    {this.abbrNum(data.quote.USD.volume_24h, 2)}
+                    {numeral(data.quote.USD.volume_24h).format("($ 0.00a)").toUpperCase()}
                   </Text>
                 </View>
                 <View style={coin.detailBox}>
