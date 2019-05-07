@@ -38,7 +38,7 @@ class Setting extends Component {
         <Text style={setting.userTitle}>USER</Text>
         <TouchableOpacity onPress={() => this.showAlert()}>
           <View style={setting.settingBox}>
-            <Text style={setting.settingText}>Logout</Text>
+            <Text style={setting.settingText}>Sign Out</Text>
             <View style={setting.valueBox}>
               <Text style={setting.valueText}>{this.props.username}</Text>
               <Icon style={setting.icon} type="Ionicons" name="md-log-out" />
