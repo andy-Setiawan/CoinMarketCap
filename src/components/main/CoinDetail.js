@@ -94,6 +94,7 @@ class CoinDetail extends Component {
                     >
                       {"+"}
                       {data.quote.USD.percent_change_24h.toFixed(2)}
+                      {"%"}
                     </Text>
                   ) : (
                     <Text
@@ -103,6 +104,7 @@ class CoinDetail extends Component {
                       }}
                     >
                       {data.quote.USD.percent_change_24h.toFixed(2)}
+                      {"%"}
                     </Text>
                   )}
                   <Text style={coin.pastText}> Past 24H</Text>
